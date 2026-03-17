@@ -1,107 +1,141 @@
-# klyp
+# Klyp
 
-This project was created with [Better-T-Stack](https://github.com/AmanVarshney01/create-better-t-stack), a modern TypeScript stack that combines Next.js, Express, ORPC, and more.
+> *Everything you need to launch your product — instantly.*
+
+Klyp is an AI-powered SaaS platform that converts any website URL into a **launch-ready marketing kit**: product videos, social banners, and marketing copy. Paste a URL → get everything needed to promote and launch your product.
+
+**Vision:** *The AI Launch Team for every founder.*
+
+---
 
 ## Features
 
-- **TypeScript** - For type safety and improved developer experience
-- **Next.js** - Full-stack React framework
-- **TailwindCSS** - Utility-first CSS for rapid UI development
-- **Shared UI package** - shadcn/ui primitives live in `packages/ui`
-- **Express** - Fast, unopinionated web framework
-- **oRPC** - End-to-end type-safe APIs with OpenAPI integration
-- **Bun** - Runtime environment
-- **Drizzle** - TypeScript-first ORM
-- **PostgreSQL** - Database engine
-- **Authentication** - Better-Auth
-- **Turborepo** - Optimized monorepo build system
-- **Biome** - Linting and formatting
-- **Husky** - Git hooks for code quality
+| Output | Description |
+|-------|-------------|
+| **Product videos** | Short-form (10–60 sec), 9:16 & 1:1 formats |
+| **Social banners** | Twitter, LinkedIn, Product Hunt, ad creatives |
+| **Marketing copy** | Tweet, LinkedIn post, ad copy, taglines |
+
+**Flow:** URL → Content extraction → AI understanding → Content generation → Download kit
+
+See [docs/prd.md](./docs/prd.md) for the full product spec.
+
+---
+
+## Tech Stack
+
+Built with [Better-T-Stack](https://github.com/AmanVarshney01/create-better-t-stack):
+
+| Layer | Tech |
+|-------|------|
+| **Frontend** | Next.js, React, Tailwind, shadcn/ui |
+| **Backend** | Express, oRPC (type-safe APIs) |
+| **Database** | PostgreSQL (Neon), Drizzle ORM |
+| **Auth** | Better Auth |
+| **Tooling** | Bun, Turborepo, Biome, Husky |
+
+---
+
+## Prerequisites
+
+- **Node.js** 22.14+ (see [.nvmrc](./.nvmrc))
+- **Bun** 1.3.8+
+
+```bash
+nvm use    # uses .nvmrc
+```
+
+---
 
 ## Getting Started
 
-First, install the dependencies:
+### 1. Install dependencies
 
 ```bash
 bun install
 ```
 
-## Database Setup
+### 2. Database setup
 
-This project uses PostgreSQL with Drizzle ORM.
-
-1. Make sure you have a PostgreSQL database set up.
-2. Update your `apps/server/.env` file with your PostgreSQL connection details.
-
-3. Apply the schema to your database:
+Uses PostgreSQL (Neon). Configure `packages/db/.env` or root `.env` with your connection string.
 
 ```bash
 bun run db:push
 ```
 
-Then, run the development server:
+### 3. Run development
 
 ```bash
 bun run dev
 ```
 
-Open [http://localhost:3001](http://localhost:3001) in your browser to see the web application.
-The API is running at [http://localhost:3000](http://localhost:3000).
+| App | URL |
+|-----|-----|
+| Web | [http://localhost:3001](http://localhost:3001) |
+| API | [http://localhost:3000](http://localhost:3000) |
 
-## UI Customization
-
-React web apps in this stack share shadcn/ui primitives through `packages/ui`.
-
-- Change design tokens and global styles in `packages/ui/src/styles/globals.css`
-- Update shared primitives in `packages/ui/src/components/*`
-- Adjust shadcn aliases or style config in `packages/ui/components.json` and `apps/web/components.json`
-
-### Add more shared components
-
-Run this from the project root to add more primitives to the shared UI package:
-
-```bash
-npx shadcn@latest add accordion dialog popover sheet table -c packages/ui
-```
-
-Import shared components like this:
-
-```tsx
-import { Button } from "@klyp/ui/components/button";
-```
-
-### Add app-specific blocks
-
-If you want to add app-specific blocks instead of shared primitives, run the shadcn CLI from `apps/web`.
-
-## Git Hooks and Formatting
-
-- Initialize hooks: `bun run prepare`
-- Format and lint fix: `bun run check`
+---
 
 ## Project Structure
 
 ```
 klyp/
 ├── apps/
-│   ├── web/         # Frontend application (Next.js)
-│   └── server/      # Backend API (Express, ORPC)
+│   ├── web/         # Next.js frontend
+│   └── server/     # Express + oRPC API
 ├── packages/
-│   ├── ui/          # Shared shadcn/ui components and styles
-│   ├── api/         # API layer / business logic
-│   ├── auth/        # Authentication configuration & logic
-│   └── db/          # Database schema & queries
+│   ├── ui/         # Shared shadcn/ui components
+│   ├── api/        # API layer / business logic
+│   ├── auth/       # Better Auth config
+│   ├── db/         # Drizzle schema & queries
+│   └── env/        # Shared env validation
+└── docs/
+    └── prd.md      # Product requirements
 ```
 
-## Available Scripts
+---
 
-- `bun run dev`: Start all applications in development mode
-- `bun run build`: Build all applications
-- `bun run dev:web`: Start only the web application
-- `bun run dev:server`: Start only the server
-- `bun run check-types`: Check TypeScript types across all apps
-- `bun run db:push`: Push schema changes to database
-- `bun run db:generate`: Generate database client/types
-- `bun run db:migrate`: Run database migrations
-- `bun run db:studio`: Open database studio UI
-- `bun run check`: Run Biome formatting and linting
+## Scripts
+
+| Command | Description |
+|---------|-------------|
+| `bun run dev` | Start all apps |
+| `bun run dev:web` | Web only |
+| `bun run dev:server` | Server only |
+| `bun run build` | Build all |
+| `bun run check-types` | TypeScript check |
+| `bun run check` | Biome lint + format |
+| `bun run db:push` | Push schema to DB |
+| `bun run db:generate` | Generate Drizzle client |
+| `bun run db:migrate` | Run migrations |
+| `bun run db:studio` | Open Drizzle Studio |
+
+---
+
+## UI Customization
+
+Shared shadcn/ui primitives live in `packages/ui`:
+
+- **Global styles:** `packages/ui/src/styles/globals.css`
+- **Components:** `packages/ui/src/components/*`
+- **Config:** `packages/ui/components.json`
+
+Add shared components:
+
+```bash
+npx shadcn@latest add accordion dialog popover -c packages/ui
+```
+
+Import:
+
+```tsx
+import { Button } from "@klyp/ui/components/button";
+```
+
+---
+
+## Git Hooks
+
+- **Husky** runs on commit via `prepare`
+- **lint-staged** runs Biome on staged `.ts`, `.tsx`, `.json` files
+- Format/lint fix: `bun run check`
