@@ -1,0 +1,3 @@
+{
+	"extends": "@klyp/config/tsconfig.base.json"
+}
