@@ -183,7 +183,7 @@ export default function SignUpForm({
 					{({ canSubmit, isSubmitting }) => (
 						<button
 							type="submit"
-							className="mt-6 w-full rounded-[10px] bg-[#7b39fc] px-6 py-3 font-cabin font-medium text-[16px] text-white shadow-sm transition-colors hover:bg-[#682edf] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
+							className="mt-6 w-full cursor-pointer rounded-[10px] bg-[#7b39fc] px-6 py-3 font-cabin font-medium text-[16px] text-white shadow-sm transition-colors hover:bg-[#682edf] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
 							disabled={!canSubmit || isSubmitting}
 						>
 							{isSubmitting ? "Creating account..." : "Sign Up"}
@@ -197,7 +197,7 @@ export default function SignUpForm({
 				<button
 					type="button"
 					onClick={onSwitchToSignIn}
-					className="font-medium text-[#c4a1ff] underline-offset-4 transition-colors hover:underline"
+					className="cursor-pointer font-medium text-[#c4a1ff] underline-offset-4 transition-colors hover:underline"
 				>
 					Sign In
 				</button>

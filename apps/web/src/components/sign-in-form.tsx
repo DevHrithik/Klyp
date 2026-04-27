@@ -119,7 +119,7 @@ export default function SignInForm({
 									</label>
 									<button
 										type="button"
-										className="font-inter text-white/60 text-xs transition-colors hover:text-white"
+										className="cursor-pointer font-inter text-white/60 text-xs transition-colors hover:text-white"
 									>
 										Forgot password?
 									</button>
@@ -156,7 +156,7 @@ export default function SignInForm({
 					{({ canSubmit, isSubmitting }) => (
 						<button
 							type="submit"
-							className="mt-6 w-full rounded-[10px] bg-[#7b39fc] px-6 py-3 font-cabin font-medium text-[16px] text-white shadow-sm transition-colors hover:bg-[#682edf] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
+							className="mt-6 w-full cursor-pointer rounded-[10px] bg-[#7b39fc] px-6 py-3 font-cabin font-medium text-[16px] text-white shadow-sm transition-colors hover:bg-[#682edf] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
 							disabled={!canSubmit || isSubmitting}
 						>
 							{isSubmitting ? "Signing in..." : "Sign In"}
@@ -170,7 +170,7 @@ export default function SignInForm({
 				<button
 					type="button"
 					onClick={onSwitchToSignUp}
-					className="font-medium text-[#c4a1ff] underline-offset-4 transition-colors hover:underline"
+					className="cursor-pointer font-medium text-[#c4a1ff] underline-offset-4 transition-colors hover:underline"
 				>
 					Sign Up
 				</button>

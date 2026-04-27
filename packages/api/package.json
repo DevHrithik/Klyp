@@ -9,7 +9,9 @@
 			"default": "./src/*.ts"
 		}
 	},
-	"scripts": {},
+	"scripts": {
+		"test": "bun test"
+	},
 	"dependencies": {
 		"@klyp/auth": "workspace:*",
 		"@klyp/db": "workspace:*",
