@@ -1,6 +1,3 @@
-import { Button } from "@klyp/ui/components/button";
-import { Input } from "@klyp/ui/components/input";
-import { Label } from "@klyp/ui/components/label";
 import { useForm } from "@tanstack/react-form";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -31,7 +28,8 @@ export default function SignInForm({
 				},
 				{
 					onSuccess: () => {
-						router.push("/dashboard");
+						router.replace("/dashboard");
+						router.refresh();
 						toast.success("Sign in successful");
 					},
 					onError: (error) => {
@@ -49,12 +47,23 @@ export default function SignInForm({
 	});
 
 	if (isPending) {
-		return <Loader />;
+		return (
+			<div className="flex h-64 items-center justify-center">
+				<Loader />
+			</div>
+		);
 	}
 
 	return (
-		<div className="mx-auto mt-10 w-full max-w-md p-6">
-			<h1 className="mb-6 text-center font-bold text-3xl">Welcome Back</h1>
+		<div className="flex w-full flex-col space-y-6 rounded-[20px] border border-[rgba(164,132,215,0.5)] bg-[rgba(85,80,110,0.4)] p-8 backdrop-blur-xl">
+			<div className="flex flex-col space-y-2 text-center">
+				<h1 className="font-instrument-serif text-4xl text-white tracking-tight">
+					Welcome Back
+				</h1>
+				<p className="font-inter text-sm text-white/70">
+					Enter your credentials to access your account
+				</p>
+			</div>
 
 			<form
 				onSubmit={(e) => {
@@ -68,17 +77,27 @@ export default function SignInForm({
 					<form.Field name="email">
 						{(field) => (
 							<div className="space-y-2">
-								<Label htmlFor={field.name}>Email</Label>
-								<Input
+								<label
+									htmlFor={field.name}
+									className="font-inter font-medium text-sm text-white/90"
+								>
+									Email
+								</label>
+								<input
 									id={field.name}
 									name={field.name}
 									type="email"
+									placeholder="name@example.com"
 									value={field.state.value}
 									onBlur={field.handleBlur}
 									onChange={(e) => field.handleChange(e.target.value)}
+									className="w-full rounded-[10px] border border-[rgba(164,132,215,0.3)] bg-[rgba(85,80,110,0.2)] px-4 py-3 font-inter text-[16px] text-white placeholder-white/50 backdrop-blur-md transition-all focus:border-[#7b39fc] focus:outline-none focus:ring-1 focus:ring-[#7b39fc]"
 								/>
 								{field.state.meta.errors.map((error) => (
-									<p key={error?.message} className="text-red-500">
+									<p
+										key={error?.message}
+										className="mt-1 font-inter text-red-400 text-xs"
+									>
 										{error?.message}
 									</p>
 								))}
@@ -91,17 +110,35 @@ export default function SignInForm({
 					<form.Field name="password">
 						{(field) => (
 							<div className="space-y-2">
-								<Label htmlFor={field.name}>Password</Label>
-								<Input
+								<div className="flex items-center justify-between">
+									<label
+										htmlFor={field.name}
+										className="font-inter font-medium text-sm text-white/90"
+									>
+										Password
+									</label>
+									<button
+										type="button"
+										className="font-inter text-white/60 text-xs transition-colors hover:text-white"
+									>
+										Forgot password?
+									</button>
+								</div>
+								<input
 									id={field.name}
 									name={field.name}
 									type="password"
+									placeholder="••••••••"
 									value={field.state.value}
 									onBlur={field.handleBlur}
 									onChange={(e) => field.handleChange(e.target.value)}
+									className="w-full rounded-[10px] border border-[rgba(164,132,215,0.3)] bg-[rgba(85,80,110,0.2)] px-4 py-3 font-inter text-[16px] text-white placeholder-white/50 backdrop-blur-md transition-all focus:border-[#7b39fc] focus:outline-none focus:ring-1 focus:ring-[#7b39fc]"
 								/>
 								{field.state.meta.errors.map((error) => (
-									<p key={error?.message} className="text-red-500">
+									<p
+										key={error?.message}
+										className="mt-1 font-inter text-red-400 text-xs"
+									>
 										{error?.message}
 									</p>
 								))}
@@ -117,25 +154,26 @@ export default function SignInForm({
 					})}
 				>
 					{({ canSubmit, isSubmitting }) => (
-						<Button
+						<button
 							type="submit"
-							className="w-full"
+							className="mt-6 w-full rounded-[10px] bg-[#7b39fc] px-6 py-3 font-cabin font-medium text-[16px] text-white shadow-sm transition-colors hover:bg-[#682edf] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
 							disabled={!canSubmit || isSubmitting}
 						>
-							{isSubmitting ? "Submitting..." : "Sign In"}
-						</Button>
+							{isSubmitting ? "Signing in..." : "Sign In"}
+						</button>
 					)}
 				</form.Subscribe>
 			</form>
 
-			<div className="mt-4 text-center">
-				<Button
-					variant="link"
+			<div className="text-center font-inter text-sm">
+				<span className="text-white/60">Don't have an account? </span>
+				<button
+					type="button"
 					onClick={onSwitchToSignUp}
-					className="text-indigo-600 hover:text-indigo-800"
+					className="font-medium text-[#c4a1ff] underline-offset-4 transition-colors hover:underline"
 				>
-					Need an account? Sign Up
-				</Button>
+					Sign Up
+				</button>
 			</div>
 		</div>
 	);

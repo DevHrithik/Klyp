@@ -49,6 +49,7 @@
 		"@biomejs/biome": "^2.2.0",
 		"@klyp/config": "workspace:*",
 		"@types/bun": "catalog:",
+		"drizzle-kit": "^0.31.10",
 		"husky": "^9.1.7",
 		"lint-staged": "^16.1.2",
 		"turbo": "^2.8.12",
