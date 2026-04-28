@@ -20,6 +20,8 @@ Klyp is an AI-powered SaaS platform that converts any website URL into a **launc
 
 See [docs/prd.md](./docs/prd.md) for the full product spec.
 
+Backend deployment (Railway monorepo): [docs/railway-backend.md](./docs/railway-backend.md).
+
 ---
 
 ## Tech Stack
