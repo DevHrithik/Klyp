@@ -1,6 +1,7 @@
 import { createContext } from "@klyp/api/context";
 import { appRouter } from "@klyp/api/routers/index";
 import { auth } from "@klyp/auth";
+import { pingDatabase } from "@klyp/db";
 import { env } from "@klyp/env/server";
 import { OpenAPIHandler } from "@orpc/openapi/node";
 import { OpenAPIReferencePlugin } from "@orpc/openapi/plugins";
@@ -11,7 +12,11 @@ import { toNodeHandler } from "better-auth/node";
 import cors from "cors";
 import express from "express";
 
+const PORT = Number.parseInt(process.env.PORT ?? "", 10) || 3001;
+const SERVER_START_MS = Date.now();
+
 const app = express();
+app.set("trust proxy", 1);
 
 app.use(
 	cors({
@@ -23,6 +28,29 @@ app.use(
 );
 
 app.all("/api/auth{/*path}", toNodeHandler(auth));
+
+/** Liveness + readiness probe: DB connectivity. Railway / load balancers should target this path. */
+app.get("/health", async (_req, res) => {
+	const database = (await pingDatabase()) ? "ok" : ("error" as const);
+
+	if (database === "error") {
+		console.error("[health] database ping failed");
+	}
+
+	const body = {
+		status: database === "ok" ? "ok" : "degraded",
+		database,
+		env: env.NODE_ENV,
+		uptimeMs: Math.round(Date.now() - SERVER_START_MS),
+		timestamp: new Date().toISOString(),
+	};
+
+	res.status(database === "ok" ? 200 : 503).json(body);
+});
+
+app.get("/", (_req, res) => {
+	res.status(200).send("OK");
+});
 
 const rpcHandler = new RPCHandler(appRouter, {
 	interceptors: [
@@ -62,10 +90,6 @@ app.use(async (req, res, next) => {
 
 app.use(express.json());
 
-app.get("/", (_req, res) => {
-	res.status(200).send("OK");
-});
-
-app.listen(3001, () => {
-	console.log("Server is running on http://localhost:3001");
+app.listen(PORT, "0.0.0.0", () => {
+	console.log(`Server is running on http://0.0.0.0:${PORT}`);
 });

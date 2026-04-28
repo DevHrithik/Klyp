@@ -1,0 +1,32 @@
+{
+	"$schema": "https://schema.railpack.com",
+	"packages": {
+		"node": "22",
+		"bun": "1.3"
+	},
+	"steps": {
+		"install": {
+			"commands": [
+				{
+					"cmd": "NODE_ENV=development bun install --frozen-lockfile",
+					"customName": "bun install (workspace + devDependencies)"
+				}
+			]
+		},
+		"build": {
+			"commands": [
+				{
+					"cmd": "bunx turbo build --filter=server",
+					"customName": "build apps/server bundle"
+				},
+				{
+					"cmd": "test -f apps/server/dist/index.mjs || (echo 'ERROR: apps/server/dist/index.mjs was not created!' && exit 1)",
+					"customName": "verify build output exists"
+				}
+			]
+		}
+	},
+	"deploy": {
+		"startCommand": "bun apps/server/dist/index.mjs"
+	}
+}
