@@ -8,6 +8,7 @@ WORKDIR /app
 COPY bun.lock package.json tsconfig.json turbo.json ./
 COPY packages ./packages
 COPY apps/server ./apps/server
+COPY apps/web/package.json ./apps/web/package.json
 
 # Install all workspace deps from repo root
 RUN bun install --frozen-lockfile
