@@ -4,4 +4,4 @@
 # Or use Dockerfile: Builder → Dockerfile → path `apps/server/Dockerfile` (context = repo root).
 
 [deploy]
-startCommand = "bun apps/server/dist/index.mjs"
+startCommand = "bun run index.mjs"
