@@ -1,7 +1,5 @@
-# Build context = monorepo root:
-#   docker build -f apps/server/Dockerfile .
-#
-# Railway: Root Directory = empty (repo root), Builder = Dockerfile, Dockerfile path = apps/server/Dockerfile
+# Build context = monorepo root (this file lives at the repo root).
+# Railway: Root Directory = empty, Builder = Dockerfile, Dockerfile Path = Dockerfile
 
 FROM oven/bun:1-alpine AS builder
 WORKDIR /app
