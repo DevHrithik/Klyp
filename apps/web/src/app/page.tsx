@@ -1,12 +1,16 @@
 "use client";
 
 import Demo from "@/components/landing/demo";
+import FAQ from "@/components/landing/faq";
 import Features from "@/components/landing/features";
+import Footer from "@/components/landing/footer";
 import HeroSection from "@/components/landing/hero";
 import HowItWorks from "@/components/landing/how-it-works";
 import LandingNavbar from "@/components/landing/navbar";
 import Pricing from "@/components/landing/pricing";
 import StatsBar from "@/components/landing/stats-bar";
+import Testimonials from "@/components/landing/testimonials";
+import WaitlistCTA from "@/components/landing/waitlist-cta";
 
 export default function Home() {
 	return (
@@ -43,6 +47,18 @@ export default function Home() {
 
 			{/* Pricing */}
 			<Pricing />
+
+			{/* Testimonials */}
+			<Testimonials />
+
+			{/* FAQ */}
+			<FAQ />
+
+			{/* Waitlist CTA */}
+			<WaitlistCTA />
+
+			{/* Footer */}
+			<Footer />
 		</main>
 	);
 }

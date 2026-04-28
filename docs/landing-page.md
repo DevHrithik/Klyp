@@ -35,7 +35,7 @@
 
 ---
 
-## 2. Social Proof / Stats Bar
+## 2. Social Proof / Stats Bar `[DONE]`
 
 **Component:** `components/landing/stats-bar.tsx`
 **Anchor:** `#stats`
@@ -73,7 +73,7 @@ A slim horizontal strip beneath the hero (no video bg) showing trust signals.
 
 ---
 
-## 4. Features / What You Get
+## 4. Features / What You Get `[DONE]`
 
 **Component:** `components/landing/features.tsx`
 **Anchor:** `#features`
@@ -95,7 +95,7 @@ A slim horizontal strip beneath the hero (no video bg) showing trust signals.
 
 ---
 
-## 5. Demo / Preview
+## 5. Demo / Preview `[DONE]`
 
 **Component:** `components/landing/demo.tsx`
 **Anchor:** `#demo`
@@ -115,7 +115,7 @@ A slim horizontal strip beneath the hero (no video bg) showing trust signals.
 
 ---
 
-## 6. Pricing
+## 6. Pricing `[DONE]`
 
 **Component:** `components/landing/pricing.tsx`
 **Anchor:** `#pricing`
@@ -136,7 +136,7 @@ A slim horizontal strip beneath the hero (no video bg) showing trust signals.
 
 ---
 
-## 7. Testimonials / Social Proof
+## 7. Testimonials / Social Proof `[DONE]`
 
 **Component:** `components/landing/testimonials.tsx`
 **Anchor:** `#testimonials`
@@ -157,7 +157,7 @@ A slim horizontal strip beneath the hero (no video bg) showing trust signals.
 
 ---
 
-## 8. FAQ
+## 8. FAQ `[DONE]`
 
 **Component:** `components/landing/faq.tsx`
 **Anchor:** `#faq`
@@ -177,7 +177,7 @@ A slim horizontal strip beneath the hero (no video bg) showing trust signals.
 
 ---
 
-## 9. Final CTA / Waitlist
+## 9. Final CTA / Waitlist `[DONE]`
 
 **Component:** `components/landing/waitlist-cta.tsx`
 **Anchor:** `#waitlist`
@@ -194,7 +194,7 @@ A slim horizontal strip beneath the hero (no video bg) showing trust signals.
 
 ---
 
-## 10. Footer
+## 10. Footer `[DONE]`
 
 **Component:** `components/landing/footer.tsx`
 
@@ -214,12 +214,12 @@ A slim horizontal strip beneath the hero (no video bg) showing trust signals.
 
 1. [x] Navbar
 2. [x] Hero Section
-3. [ ] Stats Bar
+3. [x] Stats Bar
 4. [x] How It Works
 5. [x] Features
 6. [x] Demo / Preview
 7. [x] Pricing
-8. [ ] Testimonials
-9. [ ] FAQ
-10. [ ] Final CTA / Waitlist
-11. [ ] Footer
+8. [x] Testimonials
+9. [x] FAQ
+10. [x] Final CTA / Waitlist
+11. [x] Footer
