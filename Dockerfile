@@ -24,10 +24,9 @@ WORKDIR /srv
 
 ENV NODE_ENV=production
 
-# Copy the bundled server entry + node_modules for external deps
-COPY --from=builder /app/apps/server/dist/index.mjs ./index.mjs
-COPY --from=builder /app/node_modules ./node_modules
+# Copy the fully self-contained bundle (no node_modules needed)
+COPY --from=builder /app/apps/server/dist ./dist
 
 EXPOSE 8080
 
-CMD ["bun", "run", "index.mjs"]
+CMD ["bun", "run", "dist/index.mjs"]
