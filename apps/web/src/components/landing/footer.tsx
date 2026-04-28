@@ -41,12 +41,12 @@ const footerLinks = [
 export default function Footer() {
 	return (
 		<footer className="relative w-full bg-[#03000a] px-4 pt-20 sm:px-6 lg:px-8">
-			{/* Purple glow at the top of the footer */}
-			<div className="pointer-events-none absolute top-0 left-1/2 h-[300px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#7b39fc]/20 blur-[120px]" />
-
 			<div className="relative z-10 mx-auto max-w-7xl">
 				{/* The rounded container matching the image */}
 				<div className="relative overflow-hidden rounded-t-[2.5rem] border-white/10 border-x border-t px-8 py-16 md:px-16 md:py-20">
+					{/* Inner subtle glow to bring the blur more into the footer */}
+					<div className="pointer-events-none absolute top-0 left-1/2 h-[400px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#7b39fc]/10 blur-[120px]" />
+
 					<div className="relative z-10 flex flex-col justify-between gap-16 lg:flex-row lg:gap-8">
 						{/* Left Side: Logo & Copyright */}
 						<div className="flex flex-col justify-between">

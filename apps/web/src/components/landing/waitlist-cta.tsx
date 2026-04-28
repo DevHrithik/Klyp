@@ -8,9 +8,9 @@ export default function WaitlistCTA() {
 			id="waitlist"
 			className="relative w-full overflow-hidden border-white/5 border-t bg-[#03000a] px-6 py-24 md:py-32 lg:px-8"
 		>
-			{/* Ambient Glowing Orbs */}
-			<div className="pointer-events-none absolute top-1/2 left-1/2 h-[800px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#7b39fc]/10 blur-[150px]" />
-			<div className="pointer-events-none absolute bottom-0 left-1/2 h-px w-1/2 -translate-x-1/2 bg-linear-to-r from-transparent via-[#7b39fc] to-transparent shadow-[0_0_30px_rgba(123,57,252,0.8)]" />
+			{/* Top Glow Line (Matching Footer) */}
+			<div className="absolute top-0 left-1/2 h-px w-3/4 -translate-x-1/2 bg-linear-to-r from-transparent via-[#7b39fc]/50 to-transparent shadow-[0_0_20px_rgba(123,57,252,0.5)]" />
+			<div className="pointer-events-none absolute top-0 left-1/2 h-[200px] w-[600px] -translate-x-1/2 rounded-full bg-[#7b39fc]/10 blur-[80px]" />
 
 			<div className="relative z-10 mx-auto max-w-4xl text-center">
 				<div className="flex flex-col items-center">
