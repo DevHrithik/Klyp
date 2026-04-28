@@ -29,6 +29,29 @@ app.use(
 
 app.all("/api/auth{/*path}", toNodeHandler(auth));
 
+/** Liveness + readiness probe: DB connectivity. Railway / load balancers should target this path. */
+app.get("/health", async (_req, res) => {
+	const database = (await pingDatabase()) ? "ok" : ("error" as const);
+
+	if (database === "error") {
+		console.error("[health] database ping failed");
+	}
+
+	const body = {
+		status: database === "ok" ? "ok" : "degraded",
+		database,
+		env: env.NODE_ENV,
+		uptimeMs: Math.round(Date.now() - SERVER_START_MS),
+		timestamp: new Date().toISOString(),
+	};
+
+	res.status(database === "ok" ? 200 : 503).json(body);
+});
+
+app.get("/", (_req, res) => {
+	res.status(200).send("OK");
+});
+
 const rpcHandler = new RPCHandler(appRouter, {
 	interceptors: [
 		onError((error) => {
@@ -66,29 +89,6 @@ app.use(async (req, res, next) => {
 });
 
 app.use(express.json());
-
-/** Liveness + readiness probe: DB connectivity. Railway / load balancers should target this path. */
-app.get("/health", async (_req, res) => {
-	const database = (await pingDatabase()) ? "ok" : ("error" as const);
-
-	if (database === "error") {
-		console.error("[health] database ping failed");
-	}
-
-	const body = {
-		status: database === "ok" ? "ok" : "degraded",
-		database,
-		env: env.NODE_ENV,
-		uptimeMs: Math.round(Date.now() - SERVER_START_MS),
-		timestamp: new Date().toISOString(),
-	};
-
-	res.status(database === "ok" ? 200 : 503).json(body);
-});
-
-app.get("/", (_req, res) => {
-	res.status(200).send("OK");
-});
 
 app.listen(PORT, "0.0.0.0", () => {
 	console.log(`Server is running on http://0.0.0.0:${PORT}`);
