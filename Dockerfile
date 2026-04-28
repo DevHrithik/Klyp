@@ -1,7 +1,7 @@
 # Build context = monorepo root (this file lives at the repo root).
 # Railway: Root Directory = empty, Builder = Dockerfile, Dockerfile Path = Dockerfile
 
-FROM oven/bun:1.3-alpine AS builder
+FROM oven/bun:1.3.8-alpine AS builder
 WORKDIR /app
 
 # Copy workspace manifests + lockfile first for layer caching
@@ -16,7 +16,7 @@ RUN bun install --frozen-lockfile
 RUN bunx turbo build --filter=server
 
 # --- slim runtime image ---
-FROM oven/bun:1.3-alpine AS runner
+FROM oven/bun:1.3.8-alpine AS runner
 WORKDIR /srv
 
 ENV NODE_ENV=production
