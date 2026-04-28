@@ -1,6 +1,43 @@
 # Deploy `apps/server` to Railway
 
-This repo is a **Bun + Turborepo** monorepo. The API lives under `apps/server` and depends on workspace packages (`@klyp/api`, `@klyp/auth`, `@klyp/db`, `@klyp/env`). Deploy from the **repository root** so `bun install` can link workspaces and `turbo build` can bundle `@klyp/*` into `apps/server/dist`.
+This repo is a **Bun + Turborepo** monorepo. The API lives under `apps/server` and depends on workspace packages (`@klyp/api`, `@klyp/auth`, `@klyp/db`, `@klyp/env`). **Only the server is deployed** as this service; the Next app is not started here. The catch is *where* Railway runs `bun install` — it must see the **workspace root**, not `apps/server` alone.
+
+## Why “Root Directory = `apps/server`” fails
+
+If you set Railway’s **Root Directory** to `apps/server`, the platform still clones the full repo, but the **install step** runs as if `apps/server` were a standalone app. That `package.json` depends on `"@klyp/*": "workspace:*"`, which only resolve after `bun install` at the **monorepo root** (where `workspaces` and `bun.lock` live). You get missing package / resolution errors.
+
+**You are not wrong to want “only server”** — you just need one of the patterns below so the **build** still runs from the root (or uses a Dockerfile whose **context** is the root), while the **running process** is only the API bundle.
+
+## Three working patterns (pick one)
+
+### 1) Railpack (Railway default) — [`railpack.json`](../railpack.json)
+
+Railway builds with **Railpack**, which can fall back to **`npm install`**. NPM does **not** understand Bun’s `"workspace:*"` dependencies, which causes:
+
+`Unsupported URL Type "workspace:": workspace:*`
+
+This repo configures Railpack explicitly:
+
+- **Root Directory:** leave **empty** (repository root) so **`bun.lock`** is visible to the builder. If the root dir is something like `apps/server`, Railpack won’t see the lockfile and may default to npm + fail.
+- **Install/build/start** are pinned in **`railpack.json`** (Bun install + `turbo build --filter=server` + running the bundled API).
+- **Optional:** Root [`package.json`](../package.json) sets `"engines"."bun"` so Railpack is more likely to pick Bun even when inference is flaky.
+- **Watch paths** (optional): `apps/server`, `packages`, `turbo.json`, `bun.lock`, `package.json`.
+
+### 2) Dockerfile — “server-only” image, root context
+
+Use [`apps/server/Dockerfile`](../apps/server/Dockerfile). The **build context must be the repo root**:
+
+```bash
+docker build -f apps/server/Dockerfile .
+```
+
+On Railway: **Root Directory** empty, **Builder** = Dockerfile, **Dockerfile path** = `apps/server/Dockerfile`. The final image only contains the bundled `index.mjs` + Bun (no `apps/web` runtime).
+
+### 3) Root Directory `apps/server` + custom install (fragile)
+
+Only if you must use a subdirectory as cwd: override install so `bun install` runs from the monorepo root (often via `railpack.json` **`RAILPACK_CONFIG_FILE`** or copying `bun.lock`). Prefer **pattern 1** or **2**.
+
+---
 
 ## Pre-flight: are we good to deploy?
 
@@ -31,16 +68,13 @@ Optional keys from your local `.env` (future features) can be added later (`FIRE
 ## Railway setup (GUI)
 
 1. **[railway.app](https://railway.app)** → **New project** → **Deploy from GitHub** → select this repo.
-2. **Settings → Root Directory** → leave **empty** (repo root).
-3. **Settings → Build**:
-   - **Custom build command:**  
-     `bun install --frozen-lockfile && bunx turbo build --filter=server`
-   - Railway’s default install may already run `bun install`; keeping one explicit install + turbo build avoids partial installs.
-4. **Settings → Deploy → Custom start command:**  
-   `bun run apps/server/dist/index.mjs`
-5. **Networking** → **Generate domain** (HTTPS). Use that URL as `BETTER_AUTH_URL`.
-6. **Variables** → add the table above. Redeploy after changing env.
-7. **Health check** (if Railway offers HTTP health path): path `/health`, expect **200** when DB is up.
+2. **Settings → Root Directory** → leave **empty** (repo root — **`railpack.json`**, **`bun.lock`**, workspaces).
+3. **Deploy:** Install/build/start are driven by **[`railpack.json`](../railpack.json)**. You normally **do not** override install with npm in the UI.
+4. **Networking** → **Generate domain** (HTTPS). Use that URL as `BETTER_AUTH_URL`.
+5. **Variables** → add the env table below. Redeploy after changing env.
+6. **Health check** (if offered): path `/health`, expect **200** when DB is up.
+
+If Railpack keeps using npm despite `railpack.json`, switch **Builder** to **Dockerfile**, path **`apps/server/Dockerfile`** (see pattern 2 above).
 
 ## Verify after deploy
 
@@ -71,25 +105,15 @@ curl -sS -o /dev/null -w "%{http_code}" https://<your-railway-host>/
 
 Set **`NEXT_PUBLIC_SERVER_URL`** (e.g. in Vercel) to the same Railway HTTPS base URL the browser will call for `/rpc` and `/api/auth`.
 
-## Optional: `railway.toml` at repo root
+## Repo config files
 
-You can pin build/start in-repo (Railway picks it up when present):
-
-```toml
-[build]
-builder = "nixpacks"
-buildCommand = "bun install --frozen-lockfile && bunx turbo build --filter=server"
-
-[deploy]
-startCommand = "bun run apps/server/dist/index.mjs"
-```
-
-Confirm Railway’s UI doesn’t override these if you use both.
+- **[`railway.toml`](../railway.toml)** — optional deploy/start hint; **`railpack.json`** is authoritative for Railpack installs and builds when present.
 
 ## Troubleshooting
 
 | Symptom | Likely cause |
 |---------|----------------|
+| `npm error EUNSUPPORTEDPROTOCOL` / `workspace:*` during install | Railpack used **npm** instead of **Bun**. Use repo-root **`railpack.json`**, clear **Root Directory**, commit **`bun.lock`**, or use **Dockerfile** (`apps/server/Dockerfile`). |
 | Boot loop / “address already in use” | Wrong `PORT` handling (we use `process.env.PORT` — don’t hardcode 3001 in prod). |
 | CORS errors from web | `CORS_ORIGIN` must exactly match the browser origin (scheme + host + port). |
 | Auth redirect / cookie issues | `BETTER_AUTH_URL` must match the API public URL; `trustedOrigins` in auth uses `CORS_ORIGIN`. |

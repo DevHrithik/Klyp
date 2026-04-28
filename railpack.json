@@ -1,0 +1,28 @@
+{
+	"$schema": "https://schema.railpack.com",
+	"packages": {
+		"node": "22",
+		"bun": "1.3"
+	},
+	"steps": {
+		"install": {
+			"commands": [
+				{
+					"cmd": "bun install --frozen-lockfile",
+					"customName": "bun install (workspace)"
+				}
+			]
+		},
+		"build": {
+			"commands": [
+				{
+					"cmd": "bunx turbo build --filter=server",
+					"customName": "build apps/server bundle"
+				}
+			]
+		}
+	},
+	"deploy": {
+		"startCommand": "bun apps/server/dist/index.mjs"
+	}
+}
