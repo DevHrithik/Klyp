@@ -1,0 +1,9 @@
+**/node_modules
+.git
+.next
+.turbo
+**/__tests__
+**/dist
+.cursor
+**/coverage
+apps/web/.next
