@@ -40,73 +40,60 @@ const footerLinks = [
 
 export default function Footer() {
 	return (
-		<footer className="relative w-full overflow-hidden border-white/5 border-t bg-[#03000a] px-6 pt-12 md:pt-24 lg:px-8">
-			{/* Ambient Glowing Orbs */}
-			<div className="pointer-events-none absolute bottom-0 left-1/2 h-[600px] w-[800px] -translate-x-1/2 translate-y-1/2 rounded-full bg-[#7b39fc]/10 blur-[150px]" />
+		<footer className="relative w-full bg-[#03000a] px-4 pt-20 sm:px-6 lg:px-8">
+			{/* Purple glow at the top of the footer */}
+			<div className="pointer-events-none absolute top-0 left-1/2 h-[300px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#7b39fc]/20 blur-[120px]" />
 
 			<div className="relative z-10 mx-auto max-w-7xl">
-				<div className="grid grid-cols-2 gap-12 md:grid-cols-4 lg:grid-cols-6">
-					{/* Brand Column */}
-					<div className="col-span-2 lg:col-span-2">
-						<Link href="/" className="flex items-center gap-2">
-							<div className="flex h-8 w-8 items-center justify-center rounded-lg bg-linear-to-br from-[#8a4bfe] to-[#7b39fc] shadow-[0_0_15px_rgba(123,57,252,0.5)]">
+				{/* The rounded container matching the image */}
+				<div className="relative overflow-hidden rounded-t-[2.5rem] border-white/10 border-x border-t px-8 py-16 md:px-16 md:py-20">
+					<div className="relative z-10 flex flex-col justify-between gap-16 lg:flex-row lg:gap-8">
+						{/* Left Side: Logo & Copyright */}
+						<div className="flex flex-col justify-between">
+							<Link href="/" className="mb-16 flex items-center gap-2 md:mb-32">
 								<svg
-									className="h-5 w-5 text-white"
-									fill="none"
+									width="20"
+									height="20"
 									viewBox="0 0 24 24"
-									stroke="currentColor"
-									strokeWidth={2}
-									aria-hidden
+									fill="white"
+									xmlns="http://www.w3.org/2000/svg"
 								>
 									<title>Klyp Logo</title>
-									<path
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										d="M13 10V3L4 14h7v7l9-11h-7z"
-									/>
+									<path d="M20 3L4 12L20 21V3Z" />
 								</svg>
-							</div>
-							<span className="font-instrument-serif text-2xl text-white tracking-wide">
-								Klyp
-							</span>
-						</Link>
-						<p className="mt-6 max-w-xs font-inter text-[15px] text-white/50 leading-relaxed">
-							The AI Launch Team for every founder. Build your marketing kit in
-							seconds, not days.
-						</p>
-					</div>
-
-					{/* Links Columns */}
-					{footerLinks.map((column) => (
-						<div key={column.title} className="col-span-1">
-							<h3 className="mb-6 font-cabin font-semibold text-base text-white tracking-wide">
-								{column.title}
-							</h3>
-							<ul className="flex flex-col gap-4">
-								{column.links.map((link) => (
-									<li key={link.name}>
-										<Link
-											href={link.href}
-											className="group flex items-center font-inter text-[14px] text-white/50 transition-colors hover:text-white"
-										>
-											<span className="relative">
-												{link.name}
-												<span className="absolute -bottom-1 left-0 h-[1px] w-0 bg-[#7b39fc] transition-all duration-300 group-hover:w-full" />
-											</span>
-										</Link>
-									</li>
-								))}
-							</ul>
+								<span className="font-instrument-serif text-3xl text-white tracking-wide">
+									Klyp
+								</span>
+							</Link>
+							<p className="font-inter text-[14px] text-white/40">
+								© 2026 Klyp. All rights reserved.
+							</p>
 						</div>
-					))}
-				</div>
-			</div>
 
-			{/* Giant Background Text */}
-			<div className="pointer-events-none relative mt-16 flex w-full select-none items-center justify-center pb-6 md:pb-10">
-				<h1 className="font-black font-inter text-[#1a1429] text-[28vw] leading-none tracking-tighter md:text-[24vw]">
-					Klyp
-				</h1>
+						{/* Right Side: Links */}
+						<div className="grid grid-cols-2 gap-12 sm:grid-cols-4 lg:gap-16">
+							{footerLinks.map((column) => (
+								<div key={column.title} className="flex flex-col">
+									<h3 className="mb-6 font-inter font-medium text-[14px] text-white">
+										{column.title}
+									</h3>
+									<ul className="flex flex-col gap-4">
+										{column.links.map((link) => (
+											<li key={link.name}>
+												<Link
+													href={link.href}
+													className="font-inter text-[14px] text-white/40 transition-colors hover:text-white"
+												>
+													{link.name}
+												</Link>
+											</li>
+										))}
+									</ul>
+								</div>
+							))}
+						</div>
+					</div>
+				</div>
 			</div>
 		</footer>
 	);
