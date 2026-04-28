@@ -1,8 +1,12 @@
 "use client";
 
+import type { Route } from "next";
 import Link from "next/link";
 
-const footerLinks = [
+const footerLinks: {
+	title: string;
+	links: { name: string; href: Route | string }[];
+}[] = [
 	{
 		title: "Product",
 		links: [
@@ -81,7 +85,7 @@ export default function Footer() {
 										{column.links.map((link) => (
 											<li key={link.name}>
 												<Link
-													href={link.href}
+													href={link.href as Route}
 													className="font-inter text-[14px] text-white/40 transition-colors hover:text-white"
 												>
 													{link.name}
