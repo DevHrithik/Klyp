@@ -1327,14 +1327,14 @@ bun add inngest -w apps/server
 
 | Phase | Task | Done |
 |-------|------|------|
-| 0.1 | Env schema extended | ☐ |
-| 0.2 | R2 bucket created + credentials | ☐ |
-| 0.3 | Inngest account + keys | ☐ |
-| 1.1–1.3 | DB schema: project/asset/banner pushed | ☐ |
-| 2 | R2 upload + signed URL service | ☐ |
-| 3 | Firecrawl extract + screenshot | ☐ |
-| 4 | AI brand analysis + script gen | ☐ |
-| 5 | Banner renderer (Satori) | ☐ |
+| 0.1 | Env schema extended | ✅ |
+| 0.2 | R2 bucket created + credentials | ✅ |
+| 0.3 | Inngest account + keys | ✅ |
+| 1.1–1.3 | DB schema: project/asset/banner pushed | ✅ |
+| 2 | R2 upload + signed URL service | ✅ |
+| 3 | Firecrawl extract + screenshot | ✅ |
+| 4 | AI brand analysis + script gen | ✅ |
+| 5 | Banner renderer (Satori) | ✅ |
 | 6 | Remotion video template + render fn | ☐ |
 | 7 | Inngest pipeline (4 steps) | ☐ |
 | 8 | oRPC projects router | ☐ |
