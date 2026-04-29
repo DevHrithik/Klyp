@@ -1,7 +1,5 @@
-# Repo root must be Railway "Root Directory" (empty) so `bun.lock` and workspaces resolve.
-# Builds: Railpack reads ./railpack.json (bun install + turbo --filter=server).
-#
-# Or use Dockerfile: Builder → Dockerfile → path `apps/server/Dockerfile` (context = repo root).
+# Repo root: Railway "Root Directory" empty so workspaces resolve.
+# Builds: Railpack reads ./railpack.json, or use Dockerfile at repo root.
 
 [deploy]
 startCommand = "bun run dist/index.mjs"

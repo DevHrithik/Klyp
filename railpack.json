@@ -8,7 +8,7 @@
 		"install": {
 			"commands": [
 				{
-					"cmd": "NODE_ENV=development bun install --frozen-lockfile",
+					"cmd": "NODE_ENV=development bun install",
 					"customName": "bun install (workspace + devDependencies)"
 				}
 			]
