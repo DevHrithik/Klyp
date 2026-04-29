@@ -3,6 +3,14 @@ node_modules
 .pnp
 .pnp.js
 
+# Lockfiles (reinstall with bun install)
+bun.lock
+bun.lockb
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+npm-shrinkwrap.json
+
 # Build outputs
 dist
 build
