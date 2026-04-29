@@ -10,7 +10,9 @@
 		}
 	},
 	"scripts": {
-		"test": "bun test"
+		"test": "bun test",
+		"test-storage": "bun run src/services/storage.smoke.ts",
+		"test-extract": "bun run src/services/extract.smoke.ts"
 	},
 	"dependencies": {
 		"@ai-sdk/openai": "^3.0.54",

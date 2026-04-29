@@ -2,6 +2,7 @@ import { describe, expect, it } from "bun:test";
 import { getTableColumns, getTableName } from "drizzle-orm";
 
 import { account, session, user, verification } from "../schema/auth";
+import { asset, banner, project } from "../schema/project";
 
 /**
  * Schema structure tests — no DB connection required.
@@ -84,5 +85,59 @@ describe("verification table", () => {
 		expect(cols).toHaveProperty("expiresAt");
 		expect(cols).toHaveProperty("createdAt");
 		expect(cols).toHaveProperty("updatedAt");
+	});
+});
+
+describe("project table", () => {
+	it("has the correct table name", () => {
+		expect(getTableName(project)).toBe("project");
+	});
+
+	it("has all required columns", () => {
+		const cols = getTableColumns(project);
+		expect(cols).toHaveProperty("id");
+		expect(cols).toHaveProperty("userId");
+		expect(cols).toHaveProperty("url");
+		expect(cols).toHaveProperty("status");
+		expect(cols).toHaveProperty("progress");
+		expect(cols).toHaveProperty("errorMessage");
+		expect(cols).toHaveProperty("videoUrl");
+		expect(cols).toHaveProperty("screenshotUrl");
+		expect(cols).toHaveProperty("scriptJson");
+		expect(cols).toHaveProperty("brandJson");
+		expect(cols).toHaveProperty("createdAt");
+		expect(cols).toHaveProperty("updatedAt");
+	});
+});
+
+describe("asset table", () => {
+	it("has the correct table name", () => {
+		expect(getTableName(asset)).toBe("asset");
+	});
+
+	it("has all required columns", () => {
+		const cols = getTableColumns(asset);
+		expect(cols).toHaveProperty("id");
+		expect(cols).toHaveProperty("projectId");
+		expect(cols).toHaveProperty("type");
+		expect(cols).toHaveProperty("url");
+		expect(cols).toHaveProperty("mime");
+		expect(cols).toHaveProperty("sizeBytes");
+		expect(cols).toHaveProperty("createdAt");
+	});
+});
+
+describe("banner table", () => {
+	it("has the correct table name", () => {
+		expect(getTableName(banner)).toBe("banner");
+	});
+
+	it("has all required columns", () => {
+		const cols = getTableColumns(banner);
+		expect(cols).toHaveProperty("id");
+		expect(cols).toHaveProperty("projectId");
+		expect(cols).toHaveProperty("format");
+		expect(cols).toHaveProperty("imageUrl");
+		expect(cols).toHaveProperty("createdAt");
 	});
 });

@@ -17,6 +17,15 @@ const serverEnvSchema = z.object({
 	NODE_ENV: z
 		.enum(["development", "production", "test"])
 		.default("development"),
+	FIRECRAWL_API_KEY: z.string().min(1),
+	OPENAI_API_KEY: z.string().min(1),
+	R2_ACCOUNT_ID: z.string().min(1),
+	R2_ACCESS_KEY_ID: z.string().min(1),
+	R2_SECRET_ACCESS_KEY: z.string().min(1),
+	R2_BUCKET: z.string().min(1),
+	R2_PUBLIC_URL: z.url(),
+	INNGEST_EVENT_KEY: z.string().min(1),
+	INNGEST_SIGNING_KEY: z.string().min(1),
 });
 
 const webEnvSchema = z.object({
@@ -29,6 +38,15 @@ const validServer = {
 	BETTER_AUTH_URL: "http://localhost:3001",
 	CORS_ORIGIN: "http://localhost:3000",
 	NODE_ENV: "test" as const,
+	FIRECRAWL_API_KEY: "fc-test",
+	OPENAI_API_KEY: "sk-test",
+	R2_ACCOUNT_ID: "acc",
+	R2_ACCESS_KEY_ID: "key",
+	R2_SECRET_ACCESS_KEY: "secret",
+	R2_BUCKET: "bucket",
+	R2_PUBLIC_URL: "https://pub-example.r2.dev",
+	INNGEST_EVENT_KEY: "evt",
+	INNGEST_SIGNING_KEY: "sign",
 };
 
 describe("server env schema", () => {

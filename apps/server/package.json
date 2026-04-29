@@ -7,6 +7,7 @@
 		"check-types": "tsc -b",
 		"compile": "bun build --compile --minify --sourcemap --bytecode ./src/index.ts --outfile server",
 		"dev": "bun run --hot src/index.ts",
+		"verify-phase0": "bun run scripts/verify-phase0-env.ts",
 		"start": "bun run dist/index.mjs"
 	},
 	"dependencies": {
