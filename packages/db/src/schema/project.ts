@@ -29,6 +29,7 @@ export const project = pgTable(
 		userId: text("user_id")
 			.notNull()
 			.references(() => user.id, { onDelete: "cascade" }),
+		name: text("name"),
 		url: text("url").notNull(),
 		status: projectStatusEnum("status").default("pending").notNull(),
 		progress: integer("progress").default(0).notNull(),

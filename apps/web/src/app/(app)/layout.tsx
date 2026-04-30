@@ -6,7 +6,7 @@ export default function AppLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<div className="relative flex min-h-svh w-full bg-[#03000a] text-white">
+		<div className="relative flex h-svh w-full overflow-hidden bg-[#03000a] text-white">
 			{/* Ambient Gradients matching Landing Page */}
 			<div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
 				<div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(123,57,252,0.15)_0%,transparent_100%)]" />

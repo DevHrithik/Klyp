@@ -11,6 +11,9 @@ import { ZodToJsonSchemaConverter } from "@orpc/zod/zod4";
 import { toNodeHandler } from "better-auth/node";
 import cors from "cors";
 import express from "express";
+import { serve } from "inngest/express";
+import { inngest } from "./inngest/client";
+import { processProject } from "./inngest/processProject";
 
 const PORT = Number.parseInt(process.env.PORT ?? "", 10) || 3001;
 const SERVER_START_MS = Date.now();
@@ -21,13 +24,20 @@ app.set("trust proxy", 1);
 app.use(
 	cors({
 		origin: env.CORS_ORIGIN,
-		methods: ["GET", "POST", "OPTIONS"],
+		methods: ["GET", "POST", "PUT", "OPTIONS"],
 		allowedHeaders: ["Content-Type", "Authorization"],
 		credentials: true,
 	}),
 );
 
+app.use(express.json());
+
 app.all("/api/auth{/*path}", toNodeHandler(auth));
+
+app.use(
+	"/api/inngest",
+	serve({ client: inngest, functions: [processProject] }),
+);
 
 /** Liveness + readiness probe: DB connectivity. Railway / load balancers should target this path. */
 app.get("/health", async (_req, res) => {
@@ -87,8 +97,6 @@ app.use(async (req, res, next) => {
 
 	next();
 });
-
-app.use(express.json());
 
 app.listen(PORT, "0.0.0.0", () => {
 	console.log(`Server is running on http://0.0.0.0:${PORT}`);

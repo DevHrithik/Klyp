@@ -30,7 +30,9 @@
 		"zod": "catalog:"
 	},
 	"devDependencies": {
+		"inngest-cli": "latest",
 		"@klyp/config": "workspace:*",
+		"@remotion/bundler": "^4.0.454",
 		"@types/bun": "catalog:",
 		"@types/cors": "^2.8.17",
 		"@types/express": "catalog:",

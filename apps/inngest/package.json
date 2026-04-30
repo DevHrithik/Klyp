@@ -1,0 +1,7 @@
+{
+	"name": "inngest-dev",
+	"private": true,
+	"scripts": {
+		"dev": "bash dev.sh"
+	}
+}

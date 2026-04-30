@@ -7,6 +7,13 @@ import { QueryCache, QueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 export const queryClient = new QueryClient({
+	defaultOptions: {
+		queries: {
+			staleTime: 1000 * 60, // 1 minute — avoids redundant refetches on navigation
+			gcTime: 1000 * 60 * 5, // keep unused data in cache for 5 minutes
+			retry: 1,
+		},
+	},
 	queryCache: new QueryCache({
 		onError: (error, query) => {
 			toast.error(`Error: ${error.message}`, {

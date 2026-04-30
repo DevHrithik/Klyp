@@ -1335,11 +1335,11 @@ bun add inngest -w apps/server
 | 3 | Firecrawl extract + screenshot | ✅ |
 | 4 | AI brand analysis + script gen | ✅ |
 | 5 | Banner renderer (Satori) | ✅ |
-| 6 | Remotion video template + render fn | ☐ |
-| 7 | Inngest pipeline (4 steps) | ☐ |
-| 8 | oRPC projects router | ☐ |
-| 9.1 | Dashboard form → create project | ☐ |
-| 9.2 | `/projects/[id]` detail + polling | ☐ |
-| 9.3 | Dashboard project list | ☐ |
-| 10 | E2E test + error cases | ☐ |
+| 6 | Remotion video template + render fn | ✅ |
+| 7 | Inngest pipeline (4 steps) | ✅ |
+| 8 | oRPC projects router | ✅ |
+| 9.1 | Dashboard form → create project | ✅ |
+| 9.2 | `/projects/[id]` detail + polling | ✅ |
+| 9.3 | Dashboard project list | ✅ |
+| 10 | E2E test + error cases | ✅ |
 | 11 | Deploy web + server + Inngest | ☐ |
