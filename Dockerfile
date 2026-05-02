@@ -13,7 +13,7 @@ COPY apps/web/package.json ./apps/web/package.json
 # Install all workspace deps (dev included — tsdown is a devDep)
 RUN NODE_ENV=development bun install
 
-# Bundle the server (inlines @klyp/* packages into a single dist/index.mjs)
+# Bundle the server (@klyp/* workspace packages are inlined; npm deps stay external)
 RUN bunx turbo build --filter=server \
     && test -f apps/server/dist/index.mjs \
     || (echo "ERROR: build did not produce apps/server/dist/index.mjs" && exit 1)
@@ -27,10 +27,13 @@ ENV NODE_ENV=production
 # Copy the bundle
 COPY --from=builder /app/apps/server/dist ./dist
 
-# Remotion and its transitive deps (resvg, rspack) ship native .node binaries
-# and are kept external in the bundle — they must be resolvable at runtime.
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/apps/server/package.json ./package.json
+# Copy workspace manifests so bun can resolve external npm deps at runtime
+COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/apps/server/package.json ./apps/server/package.json
+COPY --from=builder /app/packages ./packages
+
+# Install production deps only (no dev tools needed at runtime)
+RUN NODE_ENV=production bun install --production
 
 EXPOSE 8080
 
