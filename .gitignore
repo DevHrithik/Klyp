@@ -3,8 +3,8 @@ node_modules
 .pnp
 .pnp.js
 
-# Lockfiles (reinstall with bun install)
-bun.lock
+# Lockfiles — keep bun.lock committed for deterministic builds.
+# Block other package managers' lockfiles to prevent drift.
 bun.lockb
 package-lock.json
 yarn.lock

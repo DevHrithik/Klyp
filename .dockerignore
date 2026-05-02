@@ -2,8 +2,18 @@
 .git
 .next
 .turbo
+.cursor
+.husky
 **/__tests__
 **/dist
-.cursor
 **/coverage
-apps/web/.next
+**/.env
+**/.env.*
+!**/.env.example
+
+# Web/inngest source isn't needed at runtime — only their package.json
+# is copied explicitly by the Dockerfile for workspace install.
+apps/web/*
+!apps/web/package.json
+apps/inngest/*
+!apps/inngest/package.json

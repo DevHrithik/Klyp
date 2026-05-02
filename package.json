@@ -39,7 +39,7 @@
 		"db:migrate": "turbo -F @klyp/db db:migrate",
 		"test": "turbo test",
 		"check": "biome check --write .",
-		"prepare": "husky"
+		"prepare": "husky || true"
 	},
 	"dependencies": {
 		"@klyp/env": "workspace:*",
