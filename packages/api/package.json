@@ -32,6 +32,7 @@
 		"ai": "^6.0.169",
 		"better-auth": "catalog:",
 		"dotenv": "catalog:",
+		"drizzle-orm": "^0.45.1",
 		"inngest": "^4.2.5",
 		"satori": "^0.26.0",
 		"sharp": "^0.34.5",
