@@ -32,8 +32,9 @@ COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/apps/server/package.json ./apps/server/package.json
 COPY --from=builder /app/packages ./packages
 
-# Install production deps only (no dev tools needed at runtime)
-RUN NODE_ENV=production bun install --production
+# Install production deps only (HUSKY=0 prevents the prepare script from
+# failing when husky isn't installed as a devDep)
+RUN HUSKY=0 NODE_ENV=production bun install --production
 
 EXPOSE 8080
 
