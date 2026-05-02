@@ -19,7 +19,9 @@
 		"@orpc/openapi": "catalog:",
 		"@orpc/server": "catalog:",
 		"@orpc/zod": "catalog:",
+		"@remotion/bundler": "^4.0.454",
 		"@remotion/media-utils": "^4.0.454",
+		"drizzle-orm": "^0.45.1",
 		"@remotion/renderer": "^4.0.454",
 		"better-auth": "catalog:",
 		"cors": "^2.8.5",
@@ -32,7 +34,6 @@
 	"devDependencies": {
 		"inngest-cli": "latest",
 		"@klyp/config": "workspace:*",
-		"@remotion/bundler": "^4.0.454",
 		"@types/bun": "catalog:",
 		"@types/cors": "^2.8.17",
 		"@types/express": "catalog:",
