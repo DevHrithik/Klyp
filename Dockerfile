@@ -13,7 +13,7 @@ COPY apps/web/package.json ./apps/web/package.json
 # Install all workspace deps (dev included — tsdown is a devDep)
 RUN NODE_ENV=development bun install
 
-# Bundle the server (@klyp/* workspace packages are inlined; npm deps stay external)
+# Bundle the server (inlines most deps; native .node packages stay external)
 RUN bunx turbo build --filter=server \
     && test -f apps/server/dist/index.mjs \
     || (echo "ERROR: build did not produce apps/server/dist/index.mjs" && exit 1)
