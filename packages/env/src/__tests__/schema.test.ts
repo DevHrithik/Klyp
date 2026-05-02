@@ -14,6 +14,7 @@ const serverEnvSchema = z.object({
 	BETTER_AUTH_SECRET: z.string().min(32),
 	BETTER_AUTH_URL: z.url(),
 	CORS_ORIGIN: z.url(),
+	TRUSTED_ORIGINS: z.array(z.string().url()).optional(),
 	NODE_ENV: z
 		.enum(["development", "production", "test"])
 		.default("development"),

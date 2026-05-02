@@ -30,11 +30,19 @@ async function handler(
 	if (cookie) proxyHeaders.set("cookie", cookie);
 	const ct = req.headers.get("content-type");
 	if (ct) proxyHeaders.set("content-type", ct);
-	// Better Auth CSRF check requires Origin; derive it from the incoming host if not present
-	const origin =
-		req.headers.get("origin") ??
-		`${req.nextUrl.protocol}//${req.headers.get("host")}`;
-	proxyHeaders.set("origin", origin);
+	// Better Auth CSRF checks Origin against trustedOrigins. Prefer real
+	// Origin; when missing (same-origin fetch), rebuild from Host + forwarded
+	// proto so Vercel’s internal URL scheme is not wrong.
+	const host = req.headers.get("host");
+	const fromForwarded = req.headers
+		.get("x-forwarded-proto")
+		?.split(",")[0]
+		?.trim();
+	const fallbackOrigin = host
+		? `${fromForwarded ?? req.nextUrl.protocol.replace(":", "")}://${host}`
+		: "";
+	const origin = req.headers.get("origin") ?? fallbackOrigin;
+	if (origin) proxyHeaders.set("origin", origin);
 	proxyHeaders.set("x-forwarded-host", req.headers.get("host") ?? "");
 	proxyHeaders.set("x-forwarded-for", req.headers.get("x-forwarded-for") ?? "");
 

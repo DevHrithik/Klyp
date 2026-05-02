@@ -2,7 +2,7 @@ import { createContext } from "@klyp/api/context";
 import { appRouter } from "@klyp/api/routers/index";
 import { auth } from "@klyp/auth";
 import { pingDatabase } from "@klyp/db";
-import { env } from "@klyp/env/server";
+import { browserTrustedOrigins, env } from "@klyp/env/server";
 import { OpenAPIHandler } from "@orpc/openapi/node";
 import { OpenAPIReferencePlugin } from "@orpc/openapi/plugins";
 import { onError } from "@orpc/server";
@@ -23,7 +23,7 @@ app.set("trust proxy", 1);
 
 app.use(
 	cors({
-		origin: env.CORS_ORIGIN,
+		origin: browserTrustedOrigins(),
 		methods: ["GET", "POST", "PUT", "OPTIONS"],
 		allowedHeaders: ["Content-Type", "Authorization"],
 		credentials: true,
