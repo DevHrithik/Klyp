@@ -24,8 +24,13 @@ WORKDIR /srv
 
 ENV NODE_ENV=production
 
-# Copy the fully self-contained bundle (no node_modules needed)
+# Copy the bundle
 COPY --from=builder /app/apps/server/dist ./dist
+
+# Remotion and its transitive deps (resvg, rspack) ship native .node binaries
+# and are kept external in the bundle — they must be resolvable at runtime.
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/apps/server/package.json ./package.json
 
 EXPOSE 8080
 

@@ -10,4 +10,8 @@ export default defineConfig({
 	// External npm deps (express, better-auth, zod, etc.) are also bundled
 	// so the output has zero runtime dependencies — no node_modules needed.
 	noExternal: [/.*/],
+	// Remotion and its transitive deps ship platform-specific native .node
+	// binaries that cannot be parsed as JS/UTF-8 — keep them external so
+	// rolldown never tries to inline them.
+	external: [/^remotion$/, /^@remotion\//, /^@resvg\//, /^@rspack\//],
 });
